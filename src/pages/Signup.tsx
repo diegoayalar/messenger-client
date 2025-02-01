@@ -7,13 +7,16 @@ import { signUp } from '../api/auth';
 const schema = z.object({
     email: z
         .string()
-        .email('Invalid email address')
-        .nonempty('Email is required'),
+        .nonempty('Email is required')
+        .email('Invalid email address'),
     password: z
         .string()
-        .min(8, 'Password must be at least 8 characters')
-        .nonempty('Password is required'),
-    username: z.string().min(8).nonempty(),
+        .nonempty('Password is required')
+        .min(8, 'Password must be at least 8 characters'),
+    username: z
+        .string()
+        .nonempty('Username is required')
+        .min(5, 'Username must be at least 5 characters'),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -36,12 +39,19 @@ const SignupPage = () => {
             localStorage.setItem('authToken', token);
             window.location.reload();
         } catch (error) {
-            setError('root', {
-                message:
-                    error instanceof Error
-                        ? error.message
-                        : 'An unknown error occurred.',
-            });
+            const errorMessage =
+                error instanceof Error
+                    ? error.message
+                    : 'An unknown error occurred.';
+
+            if (errorMessage.includes('The email is already registered')) {
+                setError('email', {
+                    message:
+                        'The email is already registered. Please use a different email.',
+                });
+            } else {
+                setError('root', { message: errorMessage });
+            }
         }
     };
 
@@ -71,6 +81,12 @@ const SignupPage = () => {
                     placeholder="Enter your password"
                 />
 
+                {errors.password && (
+                    <div className="text-red-500">
+                        {errors.password.message}
+                    </div>
+                )}
+
                 <label className="text-left text-3xl mt-2 mb-2">Username</label>
                 <input
                     {...register('username')}
@@ -79,9 +95,9 @@ const SignupPage = () => {
                     placeholder="Enter your username"
                 />
 
-                {errors.password && (
+                {errors.username && (
                     <div className="text-red-500">
-                        {errors.password.message}
+                        {errors.username.message}
                     </div>
                 )}
 

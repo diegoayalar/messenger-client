@@ -29,7 +29,7 @@ export const signUp = async (
     });
 
     if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
+        throw new Error(await response.text());
     }
 
     const data = await response.json();

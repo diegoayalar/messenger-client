@@ -7,12 +7,12 @@ import { logIn } from '../api/auth';
 const schema = z.object({
     email: z
         .string()
-        .email('Invalid email address')
-        .nonempty('Email is required'),
+        .nonempty('Email is required')
+        .email('Invalid email address'),
     password: z
         .string()
-        .min(8, 'Password must be at least 8 characters')
-        .nonempty('Password is required'),
+        .nonempty('Password is required')
+        .min(8, 'Password must be at least 8 characters'),
 });
 
 type FormFields = z.infer<typeof schema>;
@@ -61,7 +61,7 @@ const LoginPage = () => {
                 <label className="text-left text-3xl mt-2 mb-2">Password</label>
                 <input
                     {...register('password')}
-                    className="shadow border rounded py-1 pl-2 text-3xl"
+                    className="shadow border rounded py-1 pl-2 mb-1 text-3xl"
                     type="password"
                     placeholder="Enter your password"
                 />
@@ -69,6 +69,10 @@ const LoginPage = () => {
                     <div className="text-red-500">
                         {errors.password.message}
                     </div>
+                )}
+
+                {errors.root && (
+                    <div className="text-red-500">{errors.root.message}</div>
                 )}
 
                 <button
@@ -79,9 +83,6 @@ const LoginPage = () => {
                     Log in
                 </button>
 
-                {/*errors.root && (
-                    <div className="text-red-500">{errors.root.message}</div>
-                )*/}
                 <div className="items-start mt-3">
                     <NavLink to="/signup" className="text-2xl">
                         Sign Up

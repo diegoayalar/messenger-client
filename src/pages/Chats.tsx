@@ -1,4 +1,4 @@
-const Dashboard = () => {
+const Chats = () => {
     const handleLogOut = () => {
         localStorage.removeItem('authToken');
         window.location.reload();
@@ -7,7 +7,7 @@ const Dashboard = () => {
     return (
         <div className="flex flex-col min-h-screen items-center justify-center bg-gray-100">
             <h1 className="text-4xl font-bold mb-5">
-                Welcome to the Dashboard!
+                Welcome to chats!
             </h1>
             <div className="justify-end">
                 <button
@@ -21,4 +21,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Chats;

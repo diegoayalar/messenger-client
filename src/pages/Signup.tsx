@@ -65,7 +65,7 @@ const SignupPage = () => {
                 <label className="text-left text-3xl mb-2">Email</label>
                 <input
                     {...register('email')}
-                    className="shadow border rounded py-1 pl-2 text-3xl"
+                    className="shadow border border-gray-200 rounded py-1 pl-2 text-3xl"
                     type="email"
                     placeholder="Enter your email"
                 />
@@ -76,7 +76,7 @@ const SignupPage = () => {
                 <label className="text-left text-3xl mt-2 mb-2">Password</label>
                 <input
                     {...register('password')}
-                    className="shadow border rounded py-1 pl-2 text-3xl"
+                    className="shadow border border-gray-200 rounded py-1 pl-2 text-3xl"
                     type="password"
                     placeholder="Enter your password"
                 />
@@ -90,7 +90,7 @@ const SignupPage = () => {
                 <label className="text-left text-3xl mt-2 mb-2">Username</label>
                 <input
                     {...register('username')}
-                    className="shadow border rounded py-1 pl-2 text-3xl"
+                    className="shadow border border-gray-200 rounded py-1 pl-2 text-3xl"
                     type="text"
                     placeholder="Enter your username"
                 />

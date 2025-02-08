@@ -38,3 +38,11 @@ export const validateToken = async (): Promise<boolean> => {
     return true;
 };
 
+export const logOut = async (): Promise<void> => {
+    const response = await fetch('http://localhost:7279/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+    });
+
+    if (!response.ok) throw new Error(await response.text());
+};

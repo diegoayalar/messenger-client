@@ -6,7 +6,6 @@ const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     const handleLogOut = () => {
-        localStorage.removeItem('authToken');
         window.location.reload();
     };
 

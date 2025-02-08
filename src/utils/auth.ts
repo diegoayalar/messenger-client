@@ -1,3 +1,9 @@
-export const isAuthenticated = (): boolean => {
-    return !!localStorage.getItem('authToken'); // Replace 'authToken' with your token's key
-  };
+import { validateToken } from '../api/auth';
+
+export const isAuthenticated = async (): Promise<boolean> => {
+    try {
+        return await validateToken();
+    } catch (error) {
+        return false;
+    }
+};

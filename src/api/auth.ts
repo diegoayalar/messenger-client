@@ -21,11 +21,20 @@ export const signUp = async (
         credentials: 'include',
     });
 
-    if (!response.ok) {
-        throw new Error(await response.text());
-    }
+    if (!response.ok) throw new Error(await response.text());
+};
 
-    const data = await response.json();
+export const validateToken = async (): Promise<boolean> => {
+    const response = await fetch(
+        'http://localhost:7279/api/auth/validate-token',
+        {
+            method: 'POST',
+            credentials: 'include',
+        }
+    );
 
-    return data.Token;
-}
+    if (!response.ok) return false;
+
+    return true;
+};
+

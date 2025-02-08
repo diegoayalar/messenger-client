@@ -27,8 +27,7 @@ const LoginPage = () => {
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
-            const token = await logIn(data.email, data.password);
-            localStorage.setItem('authToken', token);
+            await logIn(data.email, data.password);
             window.location.reload();
         } catch (error) {
             setError('root', {

@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import SidebarChat from './SidebarChat';
 import { ChevronLeft, ChevronRight, LogOut } from 'lucide-react';
+import { logOut } from '../api/auth';
 
 const Sidebar = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
-    const handleLogOut = () => {
-        localStorage.removeItem('authToken');
-        window.location.reload();
+    const handleLogOut = async () => {
+        try {
+            await logOut();
+            window.location.reload();
+        } catch (error) {
+            console.error('Error during logout:', error);
+            alert('An error occurred during logout. Please try again later.');
+        }
     };
 
     return (

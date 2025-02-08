@@ -31,12 +31,7 @@ const SignupPage = () => {
 
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
-            const token = await signUp(
-                data.email,
-                data.password,
-                data.username
-            );
-            localStorage.setItem('authToken', token);
+            await signUp(data.email, data.password, data.username);
             window.location.reload();
         } catch (error) {
             const errorMessage =

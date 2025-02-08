@@ -2,24 +2,22 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
 import LoginPage from './pages/Login';
 import Chats from './pages/Chats';
 import SignupPage from './pages/Signup';
-import { isAuthenticated } from './utils/auth';
+import { useAuth } from './context/AuthContext';
 
 const App = () => {
+    const { authenticated } = useAuth();
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route
                     path="/"
-                    element={isAuthenticated() ? <Chats /> : <LoginPage />}
+                    element={authenticated ? <Chats /> : <LoginPage />}
                 />
                 <Route
                     path="/signup"
                     element={
-                        isAuthenticated() ? (
-                            <Navigate to={'/'} />
-                        ) : (
-                            <SignupPage />
-                        )
+                        authenticated ? <Navigate to={'/'} /> : <SignupPage />
                     }
                 />
                 <Route path="*" element={<Navigate to="/" />} />

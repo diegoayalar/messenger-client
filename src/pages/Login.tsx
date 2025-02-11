@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router';
 import { z } from 'zod';
 import { logIn } from '../api/auth';
+import { useAuth } from '../context/AuthContext';
 
 const schema = z.object({
     email: z
@@ -18,6 +19,8 @@ const schema = z.object({
 type FormFields = z.infer<typeof schema>;
 
 const LoginPage = () => {
+    const { refreshAuth } = useAuth();
+
     const {
         register,
         handleSubmit,
@@ -28,7 +31,7 @@ const LoginPage = () => {
     const onSubmit: SubmitHandler<FormFields> = async (data) => {
         try {
             await logIn(data.email, data.password);
-            window.location.reload();
+            await refreshAuth();
         } catch (error) {
             setError('root', {
                 message:

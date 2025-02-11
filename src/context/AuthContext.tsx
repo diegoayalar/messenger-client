@@ -1,9 +1,16 @@
-import { createContext, useState, useEffect, ReactNode, useContext } from 'react';
+import {
+    createContext,
+    useState,
+    useEffect,
+    ReactNode,
+    useContext,
+} from 'react';
 import { isAuthenticated } from '../utils/auth';
 
 interface AuthContextType {
     authenticated: boolean;
     loading: boolean;
+    refreshAuth: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -12,14 +19,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            const authStatus = await isAuthenticated();
-            setAuthenticated(authStatus);
-            setLoading(false);
-        };
+    const refreshAuth = async () => {
+        setLoading(true);
+        setAuthenticated(await isAuthenticated());
+        setLoading(false);
+    };
 
-        checkAuth();
+    useEffect(() => {
+        refreshAuth();
     }, []);
 
     if (loading) {
@@ -27,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ authenticated, loading }}>
+        <AuthContext.Provider value={{ authenticated, loading, refreshAuth }}>
             {children}
         </AuthContext.Provider>
     );

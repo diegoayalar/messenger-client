@@ -6,6 +6,7 @@ import {
     useContext,
 } from 'react';
 import { isAuthenticated } from '../utils/auth';
+import { SpinnerCircular } from 'spinners-react';
 
 interface AuthContextType {
     authenticated: boolean;
@@ -30,7 +31,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className="flex items-center justify-center h-screen w-full">
+            <SpinnerCircular color='#707070'/>
+        </div>;
     }
 
     return (
